@@ -6,7 +6,6 @@ class BMIResult{
   String title;
   Color color;
   String image;
-  String muhaymin;
 
   BMIResult({required this.image,required this.color,required this.title});
 }
