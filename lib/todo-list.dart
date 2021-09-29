@@ -1,13 +1,20 @@
+
 import 'package:flutter/material.dart';
 
+import 'startpoint.dart';
+
 class TodoList extends StatefulWidget {
-  const TodoList({Key? key}) : super(key: key);
+  final Task? task;
+  const TodoList({Key? key,required this.task}) : super(key: key);
 
   @override
   _TodoListState createState() => _TodoListState();
 }
 
 class _TodoListState extends State<TodoList> {
+  var formkey = GlobalKey<FormState>();
+  var name = TextEditingController();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,18 +22,46 @@ class _TodoListState extends State<TodoList> {
         foregroundColor: Colors.lightGreenAccent,
         title: Text('Hello'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Name',
-                hintText: 'What people call u '
-
+      body: Form(
+        key: formkey,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  hintText: 'What people call u ',
+                  border: OutlineInputBorder()
+                ),
+                validator: (String? value){
+                    if(value!.isEmpty)
+                    return "THIS FIELD IS REQUIRED";
+                    else
+                      return null;
+                    },
+                controller: name,
               ),
-            )
-          ],
+              SizedBox(height: 40,),
+              ElevatedButton(onPressed: (){
+                if(formkey.currentState!.validate()){
+                  if(name==null){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Name is req')));
+                  }
+                  else{
+                    Navigator.pop(context,Task(name: name.text));
+                  }
+                } else{
+                  autovalidateMode = AutovalidateMode.always;
+                  setState(() {
+
+                  });
+                }
+
+              },
+                  child: Text('CREATE'))
+            ],
+          ),
         ),
       ),
     );
