@@ -43,14 +43,9 @@ class _TodoListState extends State<TodoList> {
                 controller: name,
               ),
               SizedBox(height: 40,),
-              ElevatedButton(onPressed: (){
+              ElevatedButton(onPressed: () {
                 if(formkey.currentState!.validate()){
-                  if(name==null){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Name is req')));
-                  }
-                  else{
-                    Navigator.pop(context,Task(name: name.text));
-                  }
+                  Navigator.pop(context,Task(name: name.text));
                 } else{
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {

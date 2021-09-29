@@ -45,8 +45,13 @@ class _Task1State extends State<Task1> {
               ),
             );
           }),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> TodoList(task: null,)));
+      floatingActionButton: FloatingActionButton(onPressed: () async{
+        Task? response = await Navigator.push(context, MaterialPageRoute(builder: (context)=> TodoList(task: null,)));
+        if(response!=null)
+          task.add(response);
+        setState(() {
+
+        });
       },child: Icon(Icons.add),),
       
     );
